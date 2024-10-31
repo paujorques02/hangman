@@ -1,0 +1,11 @@
+The machine has failed the word SWASHBUCKLERING.
+The machine has failed the word HYDROSOMATOUS.
+The machine has failed the word PREADVISE.
+The machine has failed the word KNUCKLIER.
+The machine has guessed the EARTHED. It used 10 attempts.
+The machine has guessed the ASSIDEAN. It used 10 attempts.
+The machine has failed the word NURLY.
+The machine has failed the word OUTSAVOR.
+The machine has failed the word MISBUILDING.
+The machine has guessed the CHADRI. It used 12 attempts.
+Out of 10 words, the machine solved 3 and failed in 7. Used 144 attempts.
