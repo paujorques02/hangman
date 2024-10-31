@@ -1,4 +1,3 @@
-import sys
 from random_word import RandomWords
 
 
@@ -12,20 +11,20 @@ def choose_dificulty():
     while(True):
         option = input('''
 Choose a dificulty:
-    1) Easy game: 12 tries
-    2) Normal game: 10 tries
-    3) Hard game: 8 tries
-    4) Imposible game: 7 tries
+    1) Easy game: 20 attempts
+    2) Normal game: 16 attempts
+    3) Hard game: 12 attempts
+    4) Imposible game: 10 attempts
     
 Choose the option: ''')
         if option=="1":
-            return 12
+            return 20
         elif option == "2":
-            return 10
+            return 16
         elif option == "3":
-            return 8
+            return 12
         elif option =="4":
-            return 7
+            return 10
         print("Incorrect option")
 
 def getRandomWords(nWords: int):
@@ -61,16 +60,16 @@ def is_in_Word(actual_word, final_word, character):
 def open_file(): 
     while(True):
         try:
-            file_name = input("Put the file with the words: ")
+            file_name = input("Put the file with that contains the words: ")
             with open(file_name,"r") as file:
                 lines = file.readlines()
-                words = [line.strip.upper() for line in lines]
+                words = [line.strip().upper() for line in lines]
                 break
-        except NameError:
+        except FileNotFoundError:
             print("The file cannot be read")
     return len(words), words
 
-def create_results(results):
+def create_results_player(results):
     file_name = input("Put the file where is gonna save the results (don't put .txt): ")
     with open(f"results/{file_name}.txt","w") as file:
         for result in results[:-1]:
@@ -86,6 +85,24 @@ def create_results(results):
             file.write(f"Out of {nWords} words, you solved {correct} and failed in {incorrect}. You used {attempts} attempts.\n")
         else:
             print("Unexpected format for last result:", last_result)
+
+def create_results_machine(results):
+    file_name = input("Put the file where is gonna save the results (don't put .txt): ")
+    with open(f"results/{file_name}.txt","w") as file:
+        for result in results[:-1]:
+            word,local_attempts,solved = result
+            if (solved):
+                file.write(f"The machine has guessed the {word}. It used {local_attempts} attempts.\n")
+            else:
+                file.write(f"The machine has failed the word {word}.\n")
+
+        last_result = results[-1]  
+        if isinstance(last_result, tuple) and len(last_result) == 3:
+            nWords,correct,total_attempts = last_result
+            file.write(f"Out of {nWords} words, the machine solved {correct} and failed in {nWords-correct}. Used {total_attempts} attempts.\n")
+        else:
+            print("Unexpected format for last result:", last_result)
+
 
 def game_playerVsMachine(dificulty,words, nWords):
     count = 1
@@ -139,8 +156,38 @@ def game_playerVsMachine(dificulty,words, nWords):
         count += 1
 
     results.append((nWords,correct,incorrect,attempts))
-    create_results(results)
-            
+    create_results_player(results)
+
+def game_machineVsMachine(dificulty,words,nWords):
+    alphabet = ["E", "T", "A", "O", "I", "N", "S", "H", "R", "D", "L", "C", "U", "M", "W", "F", "G", "Y", "P", "B", "V", "K", "J", "X", "Q", "Z"]            
+    total_attempts = 0
+    local_attempts = 0
+    solved = False
+    results = []
+    correct = 0
+
+    for word in words:
+        word_str = word
+        word = set(word)
+        local_attempts = 0
+
+        for letter in alphabet:
+            if local_attempts == dificulty:
+                solved = False
+                break
+            word.discard(letter)
+            local_attempts += 1
+            total_attempts += 1
+            if (len(word) == 0):
+                solved = True
+                correct += 1
+                break
+        results.append((word_str,local_attempts,solved))
+    
+    results.append((nWords,correct,total_attempts))
+    create_results_machine(results)
+
+
 
 def playerVsMachine_option1(dificulty):
     nWords: int = numberWords()
@@ -167,9 +214,29 @@ Introduce the option: ''')
     else:
         exit()
 
+def machineVsMachine_option1(dificulty):
+    nWords: int = numberWords()
+    words = getRandomWords(nWords)
+    game_machineVsMachine(dificulty,words,nWords)
+
+def machineVsMachine_option2(dificulty):
+    nWords, words = open_file()           
+    game_machineVsMachine(dificulty,words,nWords)
 
 def machineVsMachine():
-    pass
+    option = input('''
+Do you want to the machine uses random words or you want to use a file?
+        1) RANDOM WORDS
+        2) FROM A FILE
+
+If you want to exit, press other character.
+Introduce the option: ''')
+    if (option == "1"):
+        machineVsMachine_option1(choose_dificulty())
+    elif (option == "2"):
+        machineVsMachine_option2(choose_dificulty())
+    else:
+        exit()
 
 
 
@@ -181,10 +248,10 @@ Select one option to play the hangman game:
     1) Play against the machine.
         - No look the words
         - You have 3 modes to play:
-                -> Easy game: 12 tries
-                -> Normal game: 10 tries
-                -> Hard game: 8 tries
-                -> Imposible game: 7 tries
+                -> Easy game: 20 attempts
+                -> Normal game: 16 attempts
+                -> Hard game: 12 attempts
+                -> Imposible game: 10 attempts
                 
     2) Machine plays automaticly. You can see how many tries needed to solve the aumount of words that you want.
                 
