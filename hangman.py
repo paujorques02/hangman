@@ -3,19 +3,21 @@ from random_word import RandomWords
 
 
 def posible_exit():
-    option = input("If you want to exit the game press 'X': ")
+    option = input("\nIf you want to exit the game press 'X': ")
     if (option == "X"):
         exit()
+    print("\n")
 
 def choose_dificulty():
     while(True):
         option = input('''
-        Choose a dificulty:
-            1) Easy game: 12 tries
-            2) Normal game: 10 tries
-            3) Hard game: 8 tries
-            4) Imposible game: 7 tries
-''')
+Choose a dificulty:
+    1) Easy game: 12 tries
+    2) Normal game: 10 tries
+    3) Hard game: 8 tries
+    4) Imposible game: 7 tries
+    
+Choose the option: ''')
         if option=="1":
             return 12
         elif option == "2":
@@ -43,6 +45,8 @@ def numberWords():
     return nWords
 
 def is_in_Word(actual_word, final_word, character):
+    if character in actual_word:
+        return actual_word, -1
     if final_word.count(character) == 0:
         return actual_word, 0
     new_word = list(actual_word.split())
@@ -67,7 +71,8 @@ def open_file():
     return len(words), words
 
 def create_results(results):
-    with open("results.txt","w") as file:
+    file_name = input("Put the file where is gonna save the results (don't put .txt): ")
+    with open(f"results/{file_name}.txt","w") as file:
         for result in results[:-1]:
             word,actual_word,local_attempts,solved = result
             if (solved):
@@ -90,27 +95,31 @@ def game_playerVsMachine(dificulty,words, nWords):
     results = []
 
     for word in words:
-        print(f"This is the word number {count} to be guessed.")
         posible_exit()
+        print(f"This is the word number {count} to be guessed.\n")
         print(word)
         character_correct = 0
         local_attempts = 0
         solved = False
         actual_word = "_ " * len(word)
-        print(f"Ok, you have {dificulty}  attempts to guess the word.")
+        print(f"You have {dificulty}  attempts to guess the word.\n")
         print(f"Your current word is: {actual_word}")
 
         for _ in range(dificulty):
-            character = input("Introduce a character: ").upper()
+            character = input("Introduce a letter: ").upper()
             while not character.isalpha() or len(character) != 1:
-                print("You should introduce a single character.")
-                character = input("Introduce a character: ").upper()
+                print("\nYou should introduce a single letter.\n")
+                character = input("Introduce a letter: ").upper()
             actual_word, number_character_in_word = is_in_Word(actual_word,word,character)
             if number_character_in_word > 0:
                 character_correct += number_character_in_word
-                print(f"The character '{character}' apperars {number_character_in_word} times in the word.")
+                print(f"\nThe character '{character}' apperars {number_character_in_word} times in the word.\n")
+            elif number_character_in_word == 0:
+                print(f"\nThe letter {character} is not in the word.\n")
             else:
-                print(f"The letter {character} is not in the word.")
+                print(f"\nYou have repeated the letter.\n")
+                attempts -= 1
+                local_attempts -= 1
             
             print(f"Current word is: {actual_word}")
             local_attempts += 1
@@ -119,11 +128,11 @@ def game_playerVsMachine(dificulty,words, nWords):
             if character_correct == len(word.replace(" ","")):
                 solved = True
                 correct += 1
-                print(f"You have guessed the word {word}")
+                print(f"\nYou have guessed the word {word}\n")
                 break
 
         if (not solved):
-            print(f"Sorry, you didn't guess the word {word}")
+            print(f"\nSorry, you didn't guess the word {word}\n")
             incorrect += 1
 
         results.append((word,actual_word,local_attempts,solved))
@@ -145,12 +154,12 @@ def playerVsMachine_option2(dificulty):
 
 def playerVsMachine():
     option = input('''
-            Do you want to the machine uses random words or you want to use a file?
-                   1) RANDOM WORDS
-                   2) FROM A FILE
+Do you want to the machine uses random words or you want to use a file?
+        1) RANDOM WORDS
+        2) FROM A FILE
 
-            If you want to exit, press other character.
-''')
+If you want to exit, press other character.
+Introduce the option: ''')
     if (option == "1"):
         playerVsMachine_option1(choose_dificulty())
     elif (option == "2"):
@@ -167,21 +176,21 @@ def machineVsMachine():
 while (True):
     try:
         option = input('''
-            Select one option to play the hangman game:
-                            
-                1) Play against the machine.
-                    - No look the words
-                    - You have 3 modes to play:
-                            -> Easy game: 12 tries
-                            -> Normal game: 10 tries
-                            -> Hard game: 8 tries
-                            -> Imposible game: 7 tries
-                            
-                2) Machine plays automaticly. You can see how many tries needed to solve the aumount of words that you want.
-                            
-                X) Exit.
+Select one option to play the hangman game:
                 
-                Introduce your option: ''')
+    1) Play against the machine.
+        - No look the words
+        - You have 3 modes to play:
+                -> Easy game: 12 tries
+                -> Normal game: 10 tries
+                -> Hard game: 8 tries
+                -> Imposible game: 7 tries
+                
+    2) Machine plays automaticly. You can see how many tries needed to solve the aumount of words that you want.
+                
+    X) Exit.
+    
+Introduce your option: ''')
         if (option.upper() == "X"):
             exit()
         option: int = int(option)
@@ -189,7 +198,7 @@ while (True):
     except ValueError:
         print('''
               
-            You have to introduce a valid value.
+    You have to introduce a valid value.
                
               ''')
         

@@ -1,0 +1,11 @@
+The word to guess was BEETROOT. You solved in 5.
+The word to guess was VOLENS. You solved in 6.
+The word to guess was GOLIARDIC. You solved in 8.
+The word to guess was LURIDITY. You solved in 7.
+The word to guess was RESITUATE. You solved in 7.
+The word to guess was DESITIVE. You solved in 7.
+The word to guess was OUTGOINGS. You solved in 8.
+The word to guess was CHOREOGRAPHICAL. You solved in 10.
+The word to guess was ANTISIDERIC. You solved in 9.
+The word to guess was SNORELESS. You solved in 5.
+Out of 10 words, you solved 10 and failed in 0. You used 72 attempts.
