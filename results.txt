@@ -1,0 +1,2 @@
+The word to guess was SUPERHUMAN. You solved in 9.
+Out of 1 words, you solved 1 and failed in 0. You used 9 attempts.
