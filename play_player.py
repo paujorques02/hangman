@@ -41,7 +41,6 @@ def game_playerVsMachine(dificulty,words, nWords):
     for word in words:
         posible_exit()  # Allow user to exit anytime
         print(f"This is the word number {count} to be guessed.\n")
-        print(word)
         character_correct = 0
         local_attempts = 0
         solved = False
