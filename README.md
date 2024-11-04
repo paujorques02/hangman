@@ -43,7 +43,7 @@ This project leverages Docker for a fully containerized environment, making it e
 1. **Clone the Repository**:
    Clone the repository to your local machine.
    ```bash
-   git clone https://github.com/paujorques/hangman.git
+   git clone https://github.com/paujorques02/hangman.git
    cd hangman
    ```
 
