@@ -24,6 +24,7 @@ A Python-based implementation of the classic Hangman game. The game allows users
     - [Gameplay](#gameplay)
     - [End of the game](#end-of-the-game)
     - [Example Content of `results` file](#example-content-of-results-file)
+  - [License](#license)
 
 ## Overview
 
@@ -198,3 +199,6 @@ In this example:
 The results file records the word to guess, the number of attempts taken, and whether the word was solved.
 It also summarizes the total number of words played, how many were correctly solved, how many were missed, and the total number of attempts used.
 
+## License
+
+This project is licensed under the MIT License.
