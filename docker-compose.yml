@@ -1,0 +1,20 @@
+services:
+  hangman:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"  
+    volumes:
+      - .:/app          
+      - ./results:/app/results  
+      - ./words:/app/words     
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python hangman.py
+
+volumes:
+  results:
+    driver: local
+  words:
+    driver: local
